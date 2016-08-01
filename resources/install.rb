@@ -48,11 +48,11 @@ action_class do
             URI("#{new_resource.tarball_uri}.md5")
           end
     request = Net::HTTP.new(uri.host, uri.port)
-    response = request.get(uri)
     if uri.to_s.start_with?('https')
       request.use_ssl = true
       request.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
+    response = request.get(uri)
 
     if response.code != '200'
       Chef::Log.fatal("Fetching the Tomcat tarball checksum at #{uri} resulted in an error #{response.code}")
